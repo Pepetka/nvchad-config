@@ -13,8 +13,10 @@ map("i", "<C-g>", function()
   return vim.fn["codeium#Accept"]()
 end, { expr = true })
 
+map("n", "<leader>q", "<cmd>q<CR>", { desc = "Quit" })
+
 -- Buffer
-map("n", "<leader>w", "<cmd>w<CR>", { desc = "Save" })
+map("n", "<leader>w", "<cmd>wa<CR>", { desc = "Save" })
 map("n", "<leader>cx", function()
   require("nvchad.tabufline").closeAllBufs()
 end, { desc = "Close All Buffers" })
@@ -51,8 +53,9 @@ map("n", "<leader>qt", "<cmd>TodoTrouble<CR>", { desc = "Open Todo Trouble" })
 -- Git
 map("n", "<leader>gl", ":Flog<CR>", { desc = "Git Log" })
 map("n", "<leader>gf", ":DiffviewFileHistory<CR>", { desc = "Git File History" })
-map("n", "<leader>gc", ":DiffviewOpen HEAD~1<CR>", { desc = "Git Last Commit" })
 map("n", "<leader>gt", ":DiffviewToggleFile<CR>", { desc = "Git File History" })
+map("n", "<leader>go", ":DiffviewOpen<CR>", { desc = "Git Diff Open" })
+map("n", "<leader>gc", ":DiffviewClose<CR>", { desc = "Git Diff Close" })
 
 -- Debug
 map("n", "<leader>du", function()
