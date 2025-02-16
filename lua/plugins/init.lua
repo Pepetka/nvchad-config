@@ -1,7 +1,7 @@
 return {
   {
     "nvim-tree/nvim-tree.lua",
-    opts = require "configs.tree",
+    opts = require "configs.nvimtree",
   },
   {
     "stevearc/conform.nvim",
@@ -10,10 +10,24 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
+    dependencies = { "pmizio/typescript-tools.nvim" },
     config = function()
-      require("nvchad.configs.lspconfig").defaults()
       require "configs.lspconfig"
     end,
+  },
+  {
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    opts = {
+      on_attach = require("nvchad.configs.lspconfig").on_attach,
+      on_init = require("nvchad.configs.lspconfig").on_init,
+      capabilities = require("nvchad.configs.lspconfig").capabilities,
+      settings = {
+        tsserver_plugins = {
+          "@styled/typescript-styled-plugin",
+        },
+      },
+    },
   },
   {
     "mfussenegger/nvim-lint",
@@ -29,10 +43,9 @@ return {
         "stylua",
         "prettier",
         "stylelint",
-        "eslint-lsp",
         "eslint_d",
         "lua-language-server",
-        "typescript-language-server",
+        -- "typescript-language-server",
         "tailwindcss-language-server",
         "cssmodules-language-server",
         "css-variables-language-server",
@@ -67,11 +80,13 @@ return {
         "vimdoc",
         "html",
         "css",
+        "styled",
         "typescript",
         "javascript",
         "tsx",
         "markdown",
       },
+      auto_install = true,
     },
   },
   {

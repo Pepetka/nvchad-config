@@ -1,7 +1,7 @@
 local tools = require "utils.has_tools"
 local list_by_condition = require "utils.list_by_condition"
 
-local eslint = { eslint = tools.has_eslint() }
+local eslint = { eslint_d = tools.has_eslint() }
 local stylelint = { stylelint = tools.has_stylelint() }
 
 require("lint").linters_by_ft = {

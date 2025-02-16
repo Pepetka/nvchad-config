@@ -7,13 +7,16 @@ local map = vim.keymap.set
 -- Basic
 map("n", ";", ":", { desc = "CMD enter command mode" })
 
-map("i", "jk", "<ESC>")
-map("i", "jj", "<ESC>")
+map("i", "jk", "<ESC>", { desc = "Escape" })
+map("i", "jj", "<ESC>", { desc = "Escape" })
 map("i", "<C-g>", function()
   return vim.fn["codeium#Accept"]()
-end, { expr = true })
+end, { expr = true, desc = "Accept Codeium" })
 
 map("n", "<leader>q", "<cmd>q<CR>", { desc = "Quit" })
+map("i", "<C-Space>", function()
+  require("cmp").complete()
+end, { noremap = true, silent = true, desc = "Call autocompletion" })
 
 -- Buffer
 map("n", "<leader>w", "<cmd>wa<CR>", { desc = "Save" })
