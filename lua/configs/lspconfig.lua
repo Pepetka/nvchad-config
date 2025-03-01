@@ -5,7 +5,6 @@ local lspconfig = require "lspconfig"
 local servers = {
   "html",
   "cssls",
-  -- "ts_ls",
   "cssmodules_ls",
   "tailwindcss",
   "css_variables",
@@ -30,7 +29,8 @@ lspconfig.tailwindcss.setup {
         classRegex = {
           "tw`([^`]*)",
           "tw\\(([^)]*)\\)",
-          "[a-zA-Z]*[cC]lass[Nn]ame[s]?[a-zA-Z]*\\s*=\\s*['\"]([^'\"]*)['\"]",
+          "[a-zA-Z]*[cC]lass[Nn]ame[s]?[a-zA-Z]*\\s*=\\s*[{]?[\"']?([^\"'{}]*)[\"']?[}]?",
+          "[\"']?([a-zA-Z]*[cC]lass[Nn]ame[s]?)[\"']?\\s*:\\s*['\"]([^'\"]*)['\"]",
         },
       },
     },

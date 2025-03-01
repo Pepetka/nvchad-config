@@ -1,25 +1,10 @@
-local uv = vim.loop
-
-local function file_exists(path)
-  return uv.fs_stat(path) ~= nil
-end
-
-local function get_cwd()
-  return vim.fn.getcwd()
-end
+local open_package_json = require "utils.open_package_json"
 
 local function has_dependency(dep)
-  local cwd = get_cwd()
-  local package_json_path = cwd .. "/package.json"
-  if not file_exists(package_json_path) then
+  local content = open_package_json()
+  if not content then
     return false
   end
-  local file = io.open(package_json_path, "r")
-  if not file then
-    return false
-  end
-  local content = file:read "*a"
-  file:close()
   local ok, package = pcall(vim.fn.json_decode, content)
   if not ok then
     return false

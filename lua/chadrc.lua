@@ -32,13 +32,36 @@ M.ui = {
   statusline = {
     theme = "minimal",
   },
-  --       tabufline = {
-  --          lazyload = false
-  --      }
+  cmp = {
+    format_colors = {
+      tailwind = true,
+    },
+    style = "atom",
+  },
 }
 
 M.cheatsheet = {
   theme = "simple",
+}
+
+M.mason = {
+  pkgs = {
+    "stylua",
+    "css-lsp",
+    "html-lsp",
+    "eslint_d",
+    "prettier",
+    "stylelint",
+    "lua-language-server",
+    "cssmodules-language-server",
+    "tailwindcss-language-server",
+    "css-variables-language-server",
+  },
+}
+
+M.colorify = {
+  enabled = true,
+  mode = "bg",
 }
 
 M.nvdash = {

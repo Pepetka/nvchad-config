@@ -3,6 +3,7 @@ require "nvchad.mappings"
 local neotest = require "neotest"
 
 local map = vim.keymap.set
+local del = vim.keymap.del
 
 -- Basic
 map("n", ";", ":", { desc = "CMD enter command mode" })
@@ -18,11 +19,49 @@ map("i", "<C-Space>", function()
   require("cmp").complete()
 end, { noremap = true, silent = true, desc = "Call autocompletion" })
 
+map("v", "J", ":m '>+1<CR>gv=gv", { noremap = true, silent = true, desc = "Swap line down" })
+map("v", "K", ":m '>-1<CR>gv=gv", { noremap = true, silent = true, desc = "Swap line up" })
+
+map("v", "H", "<gv", { noremap = true, silent = true, desc = "Indent left" })
+map("v", "L", ">gv", { noremap = true, silent = true, desc = "Indent right" })
+
 -- Buffer
 map("n", "<leader>w", "<cmd>wa<CR>", { desc = "Save" })
 map("n", "<leader>cx", function()
-  require("nvchad.tabufline").closeAllBufs()
+  require("nvchad.tabufline").closeAllBufs(false)
 end, { desc = "Close All Buffers" })
+
+local buffer_mode_active = false
+local function toggle_buffer_mode()
+  if buffer_mode_active then
+    del("n", "h")
+    del("n", "l")
+    del("n", "H")
+    del("n", "L")
+    del("n", "d")
+    del("n", "q")
+    buffer_mode_active = false
+    print "Буферный режим выключен"
+  else
+    map("n", "h", function()
+      require("nvchad.tabufline").prev()
+    end, { desc = "Previous Buffer Left (In Buffer Mode)", noremap = true, silent = true })
+    map("n", "l", function()
+      require("nvchad.tabufline").next()
+    end, { desc = "Next Buffer Left (In Buffer Mode)", noremap = true, silent = true })
+    map("n", "H", function()
+      require("nvchad.tabufline").move_buf(-1)
+    end, { desc = "Move Buffer Left (In Buffer Mode)", noremap = true, silent = true })
+    map("n", "L", function()
+      require("nvchad.tabufline").move_buf(1)
+    end, { desc = "Move Buffer Right (In Buffer Mode)", noremap = true, silent = true })
+    map("n", "q", toggle_buffer_mode, { desc = "Close Buffer Mode", noremap = true, silent = true })
+    buffer_mode_active = true
+    print "Буферный режим включен"
+  end
+end
+
+map("n", "<leader>bm", toggle_buffer_mode, { desc = "Toggle Buffer Mode", noremap = true, silent = true })
 
 -- Tmux
 map("n", "<c-l>", "<cmd>:TmuxNavigateRight<cr>", { desc = "Tmux Right" })

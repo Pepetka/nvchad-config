@@ -33,7 +33,21 @@ for _, language in ipairs(js_based_languages) do
       name = "Next.js: debug client-side",
       type = "chrome",
       request = "launch",
-      url = "http://localhost:3000",
+      url = function()
+        local co = coroutine.running()
+        return coroutine.create(function()
+          vim.ui.input({
+            prompt = "Enter URL: ",
+            default = "http://localhost:3000",
+          }, function(url)
+            if url == nil or url == "" then
+              return
+            else
+              coroutine.resume(co, url)
+            end
+          end)
+        end)
+      end,
       webRoot = "${workspaceFolder}",
       sourceMaps = true,
       sourceMapPathOverrides = {

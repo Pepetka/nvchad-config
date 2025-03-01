@@ -18,16 +18,7 @@ return {
   {
     "pmizio/typescript-tools.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-    opts = {
-      on_attach = require("nvchad.configs.lspconfig").on_attach,
-      on_init = require("nvchad.configs.lspconfig").on_init,
-      capabilities = require("nvchad.configs.lspconfig").capabilities,
-      settings = {
-        tsserver_plugins = {
-          "@styled/typescript-styled-plugin",
-        },
-      },
-    },
+    opts = require "configs.typescript",
   },
   {
     "mfussenegger/nvim-lint",
@@ -35,25 +26,6 @@ return {
     config = function()
       require "configs.lint"
     end,
-  },
-  {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "stylua",
-        "prettier",
-        "stylelint",
-        "eslint_d",
-        "lua-language-server",
-        -- "typescript-language-server",
-        "tailwindcss-language-server",
-        "cssmodules-language-server",
-        "css-variables-language-server",
-        "html-lsp",
-        "css-lsp",
-      },
-      automatic_installation = true,
-    },
   },
   {
     "christoomey/vim-tmux-navigator",
@@ -220,5 +192,14 @@ return {
     config = function()
       require "configs.debug"
     end,
+  },
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    build = "cd app && npm install",
+    init = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+    end,
+    ft = { "markdown" },
   },
 }
