@@ -1,9 +1,10 @@
 require "nvchad.options"
 
--- add yours here!
+local o = vim.o
+local g = vim.g
 
--- local o = vim.o
--- o.cursorlineopt ='both' -- to enable cursorline!
+o.shell = "zsh"
+g.codeium_no_map_tab = true
 
 local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 for type, icon in pairs(signs) do

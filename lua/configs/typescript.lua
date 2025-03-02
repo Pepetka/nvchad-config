@@ -1,4 +1,5 @@
 local check_typescript = require "utils.compare_versions"
+local nvlsp = require "nvchad.configs.lspconfig"
 
 local styled_plugin = check_typescript "4.9.0" and {
   "@styled/typescript-styled-plugin",
@@ -7,9 +8,9 @@ local styled_plugin = check_typescript "4.9.0" and {
 }
 
 local options = {
-  on_attach = require("nvchad.configs.lspconfig").on_attach,
-  on_init = require("nvchad.configs.lspconfig").on_init,
-  capabilities = require("nvchad.configs.lspconfig").capabilities,
+  on_attach = nvlsp.on_attach,
+  on_init = nvlsp.on_init,
+  capabilities = nvlsp.capabilities,
   settings = {
     tsserver_plugins = styled_plugin,
   },

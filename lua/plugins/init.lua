@@ -19,6 +19,7 @@ return {
     "pmizio/typescript-tools.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     opts = require "configs.typescript",
+    build = "npm install -g @styled/typescript-styled-plugin typescript-styled-plugin",
   },
   {
     "mfussenegger/nvim-lint",
@@ -39,9 +40,10 @@ return {
     },
   },
   {
-    "stevearc/dressing.nvim",
+    "folke/snacks.nvim",
+    priority = 1000,
     lazy = false,
-    opts = {},
+    opts = require "configs.snacks",
   },
   {
     "nvim-treesitter/nvim-treesitter",
@@ -56,9 +58,10 @@ return {
         "typescript",
         "javascript",
         "tsx",
+        "query",
         "markdown",
       },
-      auto_install = true,
+      sync_install = false,
     },
   },
   {
@@ -77,9 +80,7 @@ return {
   {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
-    config = function()
-      require("better_escape").setup()
-    end,
+    opts = {},
   },
   {
     "nvim-neotest/neotest",
@@ -103,21 +104,9 @@ return {
     end,
   },
   {
-    "roobert/tailwindcss-colorizer-cmp.nvim",
-    config = function()
-      require("tailwindcss-colorizer-cmp").setup {
-        color_square_width = 2,
-      }
-    end,
-  },
-  {
     "uga-rosa/translate.nvim",
     event = "BufRead",
     opts = require "configs.translate",
-  },
-  {
-    "rcarriga/nvim-notify",
-    opts = require "configs.notify",
   },
   {
     "folke/noice.nvim",
@@ -125,23 +114,42 @@ return {
     opts = require "configs.noice",
     dependencies = {
       "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
     },
   },
   {
     "petertriho/nvim-scrollbar",
     event = "BufRead",
-    opts = {},
+    opts = {
+      hide_if_all_visible = true,
+    },
+    dependencies = {
+      {
+        "lewis6991/gitsigns.nvim",
+        config = function()
+          require("gitsigns").setup()
+          require("scrollbar.handlers.gitsigns").setup()
+        end,
+      },
+      {
+        "kevinhwang91/nvim-hlslens",
+        config = function()
+          require("scrollbar.handlers.search").setup {
+            override_lens = function() end,
+          }
+        end,
+      },
+    },
   },
   {
     "max397574/colortils.nvim",
     event = "BufRead",
     cmd = "Colortils",
-    opts = {},
+    opts = require "configs.colortils",
   },
   {
     "rbong/vim-flog",
     lazy = true,
+    cmd = { "Flog", "Flogsplit", "Floggit" },
     dependencies = {
       "tpope/vim-fugitive",
     },
@@ -164,12 +172,13 @@ return {
   },
   {
     "folke/todo-comments.nvim",
+    event = "VeryLazy",
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {},
   },
   {
     "Exafunction/codeium.vim",
-    lazy = false,
+    event = "BufEnter",
   },
   {
     "mfussenegger/nvim-dap",
