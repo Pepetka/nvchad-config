@@ -1,4 +1,9 @@
 local api = require "nvim-tree.api"
+local map = vim.keymap.set
+
+local function opts(desc, bufnr)
+  return { buffer = bufnr, noremap = true, silent = true, desc = "nvim-tree: " .. desc }
+end
 
 -- Autoclose nvimtree after quit
 vim.api.nvim_create_autocmd("QuitPre", {
@@ -28,34 +33,7 @@ api.events.subscribe(api.events.Event.FileCreated, function(file)
   vim.cmd("edit " .. vim.fn.fnameescape(file.fname))
 end)
 
-local function edit_or_open()
-  local node = api.tree.get_node_under_cursor()
-
-  if node.nodes ~= nil then
-    api.node.open.edit()
-  else
-    api.node.open.edit()
-    api.tree.close()
-  end
-end
-
-local function vsplit_preview()
-  local node = api.tree.get_node_under_cursor()
-
-  if node.nodes ~= nil then
-    api.node.open.edit()
-  else
-    api.node.open.vertical()
-  end
-
-  api.tree.focus()
-end
-
-local function opts(desc, bufnr)
-  return { buffer = bufnr, noremap = true, silent = true, desc = "nvim-tree: " .. desc }
-end
-
--- Multi operations
+-- Multi files operations
 local function multi_operations(bufnr)
   -- mark operation
   local mark_move_j = function()
@@ -73,7 +51,7 @@ local function multi_operations(bufnr)
     if #marks == 0 then
       table.insert(marks, api.tree.get_node_under_cursor())
     end
-    vim.ui.input({ prompt = string.format("Trash %s files? [y/n] ", #marks) }, function(input)
+    vim.ui.input({ prompt = string.format("Trash %s files/dirs? [y/n] ", #marks) }, function(input)
       if input == "y" then
         for _, node in ipairs(marks) do
           api.fs.trash(node)
@@ -88,7 +66,7 @@ local function multi_operations(bufnr)
     if #marks == 0 then
       table.insert(marks, api.tree.get_node_under_cursor())
     end
-    vim.ui.input({ prompt = string.format("Remove %s files? [y/n] ", #marks) }, function(input)
+    vim.ui.input({ prompt = string.format("Remove %s files/dirs? [y/n] ", #marks) }, function(input)
       if input == "y" then
         for _, node in ipairs(marks) do
           api.fs.remove(node)
@@ -122,31 +100,81 @@ local function multi_operations(bufnr)
     api.tree.reload()
   end
 
-  vim.keymap.set("n", "p", api.fs.paste, opts("Paste", bufnr))
-  vim.keymap.set("n", "J", mark_move_j, opts("Toggle Bookmark Down", bufnr))
-  vim.keymap.set("n", "K", mark_move_k, opts("Toggle Bookmark Up", bufnr))
+  local mark_move = function(copy)
+    local marks = api.marks.list()
+    if #marks == 0 then
+      table.insert(marks, api.tree.get_node_under_cursor())
+    end
+    local file_src = marks[1].absolute_path
+    local from_dir = vim.fn.fnamemodify(file_src, ":h") .. "/"
 
-  vim.keymap.set("n", "cu", mark_cut, opts("Cut File(s)", bufnr))
-  vim.keymap.set("n", "tr", mark_trash, opts("Trash File(s)", bufnr))
-  vim.keymap.set("n", "rm", mark_remove, opts("Remove File(s)", bufnr))
-  vim.keymap.set("n", "cp", mark_copy, opts("Copy File(s)", bufnr))
+    vim.ui.input({ prompt = string.format("Move %s files to: ", #marks), default = from_dir }, function(input)
+      if input then
+        local to_dir = vim.fn.fnamemodify(input, ":h") .. "/"
+        vim.fn.system { "mkdir", "-p", to_dir }
 
-  vim.keymap.set("n", "mv", api.marks.bulk.move, opts("Move Bookmarked", bufnr))
+        for _, node in pairs(marks) do
+          local file = node.absolute_path
+          if copy then
+            vim.fn.system { "cp", "-R", file, to_dir }
+          else
+            vim.fn.system { "mv", file, to_dir }
+          end
+        end
+
+        api.marks.clear()
+        api.tree.reload()
+      end
+    end)
+  end
+
+  map("n", "<Esc>", api.marks.clear, opts("Clear Marks", bufnr))
+
+  map("n", "p", api.fs.paste, opts("Paste", bufnr))
+  map("n", "J", mark_move_j, opts("Toggle Bookmark Down", bufnr))
+  map("n", "K", mark_move_k, opts("Toggle Bookmark Up", bufnr))
+
+  map("n", "x", mark_cut, opts("Cut File(s)", bufnr))
+  map("n", "tr", mark_trash, opts("Trash File(s)", bufnr))
+  map("n", "d", mark_remove, opts("Remove File(s)", bufnr))
+  map("n", "c", mark_copy, opts("Copy File(s)", bufnr))
+
+  map("n", "mv", function()
+    mark_move(false)
+  end, opts("Move To File(s)", bufnr))
+  map("n", "cp", function()
+    mark_move(true)
+  end, opts("Copy To File(s)", bufnr))
 end
 
-local function vimlike_navigation(bufnr)
-  local map = vim.keymap.set
-
+-- Vim-like navigation
+local function vim_like_navigation(bufnr)
   api.config.mappings.default_on_attach(bufnr)
 
+  local function edit_or_open()
+    local node = api.tree.get_node_under_cursor()
+
+    if node.nodes ~= nil then
+      api.node.open.edit()
+    else
+      api.node.open.edit()
+      api.tree.close()
+    end
+  end
+
+  local function open_buffer_silent()
+    api.node.open.edit()
+    api.tree.focus()
+  end
+
   map("n", "l", edit_or_open, opts("Open File or Folder", bufnr))
-  map("n", "L", vsplit_preview, opts("Vsplit Preview", bufnr))
+  map("n", "L", open_buffer_silent, opts("Open File Silently", bufnr))
   map("n", "h", api.node.navigate.parent_close, opts("Close Directory", bufnr))
   map("n", "H", api.tree.collapse_all, opts("Collapse", bufnr))
 end
 
 local function on_attach(bufnr)
-  vimlike_navigation(bufnr)
+  vim_like_navigation(bufnr)
   multi_operations(bufnr)
 end
 
@@ -156,6 +184,7 @@ local options = {
   },
   git = {
     ignore = false,
+    timeout = 1000,
   },
   renderer = {
     highlight_git = true,
@@ -167,6 +196,12 @@ local options = {
   },
   filters = {
     dotfiles = false,
+  },
+  ui = {
+    confirm = {
+      remove = false,
+      trash = false,
+    },
   },
   on_attach = on_attach,
 }
