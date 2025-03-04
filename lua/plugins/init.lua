@@ -47,22 +47,7 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = {
-        "vim",
-        "lua",
-        "vimdoc",
-        "html",
-        "css",
-        "styled",
-        "typescript",
-        "javascript",
-        "tsx",
-        "query",
-        "markdown",
-      },
-      sync_install = false,
-    },
+    opts = require "configs.treesitter",
   },
   {
     "windwp/nvim-ts-autotag",

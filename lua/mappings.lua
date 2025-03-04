@@ -36,6 +36,10 @@ map("i", "<C-Space>", function()
   require("cmp").complete()
 end, opts "Call Autocomplete")
 
+map("n", "<leader>fm", function()
+  require("conform").format { lsp_fallback = true, timeout_ms = 1000 }
+end, opts "Format Code")
+
 map("v", "J", ":m '>+1<CR>gv=gv", opts "Swap line down")
 map("v", "K", ":m '>-1<CR>gv=gv", opts "Swap line up")
 
