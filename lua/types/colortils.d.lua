@@ -1,0 +1,26 @@
+---@meta
+
+---@class ColortilsMappings
+---@field increment? string
+---@field decrement? string
+---@field increment_big? string
+---@field decrement_big? string
+---@field min_value? string
+---@field max_value? string
+---@field set_register_default_format? string
+---@field set_register_choose_format? string
+---@field replace_default_format? string
+---@field replace_choose_format? string
+---@field export? string
+---@field set_value? string
+---@field transparency? string
+---@field choose_background? string
+---@field quit_window? string | string[]
+
+---@class ColortilsConfig
+---@field register? string
+---@field color_preview? string
+---@field default_format? 'hex' | 'rgb' | 'hsl'
+---@field default_color? string
+---@field border? string
+---@field mappings? ColortilsMappings

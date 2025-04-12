@@ -1,3 +1,4 @@
+---@type TranslateDefaultConfig
 local options = {
   preset = {
     output = {

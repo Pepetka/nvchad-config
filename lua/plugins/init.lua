@@ -1,6 +1,7 @@
 return {
   {
     "nvim-tree/nvim-tree.lua",
+    cmd = { "NvimTreeToggle", "NvimTreeOpen", "NvimTreeFocus" },
     opts = require "configs.nvimtree",
   },
   {
@@ -10,6 +11,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = { "pmizio/typescript-tools.nvim" },
     config = function()
       require "configs.lspconfig"
@@ -17,13 +19,15 @@ return {
   },
   {
     "pmizio/typescript-tools.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    ft = { "typescript", "javascript", "typescriptreact", "javascriptreact" },
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     opts = require "configs.typescript",
     build = "npm install -g @styled/typescript-styled-plugin typescript-styled-plugin",
   },
   {
     "mfussenegger/nvim-lint",
-    event = "VeryLazy",
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
       require "configs.lint"
     end,
@@ -31,13 +35,6 @@ return {
   {
     "christoomey/vim-tmux-navigator",
     lazy = false,
-    cmd = {
-      "TmuxNavigateLeft",
-      "TmuxNavigateDown",
-      "TmuxNavigateUp",
-      "TmuxNavigateRight",
-      "TmuxNavigatePrevious",
-    },
   },
   {
     "folke/snacks.nvim",
@@ -47,11 +44,13 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    event = "VeryLazy",
+    build = ":TSUpdate",
     opts = require "configs.treesitter",
   },
   {
     "windwp/nvim-ts-autotag",
-    event = "VeryLazy",
+    event = "BufReadPost",
     ft = {
       "html",
       "javascript",
@@ -69,7 +68,7 @@ return {
   },
   {
     "nvim-neotest/neotest",
-    event = "VeryLazy",
+    event = "BufReadPost",
     config = function()
       require "configs.test"
     end,
@@ -79,6 +78,7 @@ return {
       "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter",
       "nvim-neotest/neotest-jest",
+      "thenbe/neotest-playwright",
     },
   },
   {
@@ -90,7 +90,7 @@ return {
   },
   {
     "uga-rosa/translate.nvim",
-    event = "BufRead",
+    cmd = "Translate",
     opts = require "configs.translate",
   },
   {
@@ -103,10 +103,8 @@ return {
   },
   {
     "petertriho/nvim-scrollbar",
-    event = "BufRead",
-    opts = {
-      hide_if_all_visible = true,
-    },
+    event = "VeryLazy",
+    opts = require "configs.scrollbar",
     dependencies = {
       {
         "lewis6991/gitsigns.nvim",
@@ -127,13 +125,11 @@ return {
   },
   {
     "max397574/colortils.nvim",
-    event = "BufRead",
     cmd = "Colortils",
     opts = require "configs.colortils",
   },
   {
     "rbong/vim-flog",
-    lazy = true,
     cmd = { "Flog", "Flogsplit", "Floggit" },
     dependencies = {
       "tpope/vim-fugitive",
@@ -141,7 +137,7 @@ return {
   },
   {
     "sindrets/diffview.nvim",
-    lazy = false,
+    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewFileHistory" },
     opts = {},
   },
   {
@@ -151,7 +147,7 @@ return {
   },
   {
     "folke/trouble.nvim",
-    event = "VeryLazy",
+    cmd = { "TroubleToggle", "Trouble", "TroubleRefresh" },
     opts = {},
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
@@ -163,10 +159,11 @@ return {
   },
   {
     "Exafunction/codeium.vim",
-    event = "BufEnter",
+    event = "InsertEnter",
   },
   {
     "mfussenegger/nvim-dap",
+    cmd = { "DapToggleBreakpoint", "DapContinue", "DapStepOver", "DapStepInto", "DapStepOut" },
     dependencies = {
       { "theHamsta/nvim-dap-virtual-text", config = true },
       {
@@ -188,12 +185,38 @@ return {
     end,
   },
   {
-    "iamcco/markdown-preview.nvim",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    build = "cd app && npm install",
-    init = function()
-      vim.g.mkdp_filetypes = { "markdown" }
-    end,
+    "jellydn/hurl.nvim",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "MeanderingProgrammer/render-markdown.nvim",
+    },
+    ft = "hurl",
+    opts = {},
+  },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
     ft = { "markdown" },
+    opts = {},
+  },
+  {
+    "David-Kunz/gen.nvim",
+    cmd = "Gen",
+    opts = require "configs.gen",
+    dependencies = { "MeanderingProgrammer/render-markdown.nvim" },
+  },
+  {
+    "jackMort/ChatGPT.nvim",
+    event = "VeryLazy",
+    opts = require "configs.chatgpt",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "folke/trouble.nvim",
+      "nvim-telescope/telescope.nvim",
+      "MeanderingProgrammer/render-markdown.nvim",
+    },
   },
 }

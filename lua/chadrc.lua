@@ -6,8 +6,8 @@
 local M = {}
 
 M.base46 = {
-  theme = "kanagawa",
-  theme_toggle = { "kanagawa", "zenburn" },
+  theme = "doomchad",
+  theme_toggle = { "doomchad", "zenburn" },
   transparency = true,
 
   hl_override = {
@@ -31,6 +31,10 @@ M.base46 = {
 M.ui = {
   statusline = {
     theme = "minimal",
+    modules = {},
+  },
+  tabufline = {
+    order = { "buffers", "tabs", "treeOffset" },
   },
   cmp = {
     format_colors = {

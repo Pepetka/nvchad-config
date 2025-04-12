@@ -178,9 +178,11 @@ local function on_attach(bufnr)
   multi_operations(bufnr)
 end
 
+---@type NvimTreeConfig
 local options = {
   view = {
     width = { min = 30, max = 50 },
+    side = "right",
   },
   git = {
     ignore = false,

@@ -11,6 +11,7 @@ local options = {
   on_attach = nvlsp.on_attach,
   on_init = nvlsp.on_init,
   capabilities = nvlsp.capabilities,
+  ---@type TypeScriptToolsSettings
   settings = {
     tsserver_plugins = styled_plugin,
   },

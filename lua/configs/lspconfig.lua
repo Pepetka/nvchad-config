@@ -5,8 +5,9 @@ local lspconfig = require "lspconfig"
 local servers = {
   "html",
   "cssls",
-  "cssmodules_ls",
+  "lua_ls",
   "tailwindcss",
+  "cssmodules_ls",
   "css_variables",
 }
 local nvlsp = require "nvchad.configs.lspconfig"
@@ -16,23 +17,38 @@ for _, lsp in ipairs(servers) do
     on_attach = nvlsp.on_attach,
     on_init = nvlsp.on_init,
     capabilities = nvlsp.capabilities,
-  }
-end
-
-lspconfig.tailwindcss.setup {
-  on_attach = nvlsp.on_attach,
-  on_init = nvlsp.on_init,
-  capabilities = nvlsp.capabilities,
-  settings = {
-    tailwindCSS = {
-      experimental = {
-        classRegex = {
-          "tw`([^`]*)",
-          "tw\\(([^)]*)\\)",
-          "[a-zA-Z]*[cC]lass[Nn]ame[s]?[a-zA-Z]*\\s*=\\s*[{]?[\"']?([^\"'{}]*)[\"']?[}]?",
-          "[\"']?([a-zA-Z]*[cC]lass[Nn]ame[s]?)[\"']?\\s*:\\s*['\"]([^'\"]*)['\"]",
+    settings = {
+      ---@type LuaLSSettings
+      Lua = {
+        runtime = {
+          version = "LuaJIT",
+        },
+        diagnostics = {
+          globals = { "vim" },
+        },
+        workspace = {
+          library = {
+            vim.env.VIMRUNTIME,
+            vim.fn.stdpath "data" .. "/lazy",
+          },
+          checkThirdParty = false,
+        },
+        completion = {
+          callSnippet = "Replace",
+        },
+        telemetry = { enable = false },
+      },
+      ---@type TailwindCSSSettings
+      tailwindCSS = {
+        experimental = {
+          classRegex = {
+            "tw`([^`]*)",
+            "tw\\(([^)]*)\\)",
+            "[a-zA-Z]*[cC]lass[Nn]ame[s]?[a-zA-Z]*\\s*=\\s*[{]?[\"']?([^\"'{}]*)[\"']?[}]?",
+            "[\"']?([a-zA-Z]*[cC]lass[Nn]ame[s]?)[\"']?\\s*:\\s*['\"]([^'\"]*)['\"]",
+          },
         },
       },
     },
-  },
-}
+  }
+end

@@ -1,13 +1,21 @@
+---@type NoiceConfigOpts
 local options = {
   presets = {
     bottom_search = true,
     lsp_doc_border = true,
   },
+  notify = {
+    enabled = false,
+  },
   lsp = {
+    progress = {
+      enabled = false,
+    },
     signature = {
       enabled = true,
       auto_open = {
-        enabled = false,
+        enabled = true,
+        trigger = false,
       },
     },
   },

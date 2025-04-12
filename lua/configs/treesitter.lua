@@ -1,3 +1,4 @@
+---@type TreesitterConfig
 local options = {
   ensure_installed = {
     "vim",
@@ -11,6 +12,9 @@ local options = {
     "tsx",
     "query",
     "markdown",
+    "markdown_inline",
+    "http",
+    "hurl",
   },
   sync_install = false,
 }

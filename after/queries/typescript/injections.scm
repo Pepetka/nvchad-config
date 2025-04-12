@@ -14,6 +14,19 @@
   (#set! injection.include-children)
   (#set! injection.language "styled"))
 
+; styled.div<SomeType>`<css>`
+(binary_expression
+  left: (binary_expression
+    left: (member_expression
+      object: (identifier) @_styled
+      property: (property_identifier) @_prop
+      (#eq? @_styled "styled"))
+    right: (identifier))
+  right: (template_string) @injection.content
+  (#offset! @injection.content 0 1 0 -1)
+  (#set! injection.include-children)
+  (#set! injection.language "styled"))
+
 ; styled(Component)<{ foo: "bar" }>`<css>`
 (call_expression
   function: (non_null_expression
@@ -28,3 +41,15 @@
   (#set! injection.include-children)
   (#set! injection.language "styled"))
 
+; styled(Component)<SomeType>`<css>`
+(binary_expression
+  left: (binary_expression
+    left: (call_expression
+      function: (identifier) @_name
+      arguments: (arguments(identifier)) @_prop
+      (#eq? @_name "styled"))
+    right: (identifier))
+  right: (template_string) @injection.content
+  (#offset! @injection.content 0 1 0 -1)
+  (#set! injection.include-children)
+  (#set! injection.language "styled"))

@@ -1,3 +1,4 @@
+---@type ColortilsConfig
 local options = {
   mappings = {
     increment = "l",

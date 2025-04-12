@@ -37,6 +37,9 @@ local function check_typescript(required_version)
   end
 
   local installed_version = package.devDependencies and package.devDependencies.typescript
+  if not installed_version then
+    return false
+  end
   installed_version = installed_version:match "[%d%.]+"
   if not installed_version then
     return false

@@ -38,10 +38,11 @@ end, opts "Call Autocomplete")
 
 map("n", "<leader>fm", function()
   require("conform").format { lsp_fallback = true, timeout_ms = 1000 }
+  require("lint").try_lint()
 end, opts "Format Code")
 
-map("v", "J", ":m '>+1<CR>gv=gv", opts "Swap line down")
-map("v", "K", ":m '>-1<CR>gv=gv", opts "Swap line up")
+map("v", "D", ":m '>+1<CR>gv=gv", opts "Swap line down")
+map("v", "U", ":m '>-1<cr>gv=gv", opts "swap line up")
 
 map("v", "H", "<gv", opts "Indent left")
 map("v", "L", ">gv", opts "Indent right")
@@ -59,10 +60,10 @@ local function toggle_buffer_mode()
     del("n", "l")
     del("n", "H")
     del("n", "L")
-    del("n", "d")
+    del("n", "x")
     del("n", "q")
     buffer_mode_active = false
-    print "Буферный режим выключен"
+    print "Buffer mode disabled"
   else
     map("n", "h", function()
       require("nvchad.tabufline").prev()
@@ -76,9 +77,12 @@ local function toggle_buffer_mode()
     map("n", "L", function()
       require("nvchad.tabufline").move_buf(1)
     end, opts "Buffer Mode: Move Buffer Right")
+    map("n", "x", function()
+      require("nvchad.tabufline").close_buffer()
+    end, opts "Buffer Mode: Close Buffer")
     map("n", "q", toggle_buffer_mode, opts "Buffer Mode: Close Buffer Mode")
     buffer_mode_active = true
-    print "Буферный режим включен"
+    print "Buffer mode enabled"
   end
 end
 
@@ -119,6 +123,9 @@ map("n", "<leader>gf", ":DiffviewFileHistory<CR>", opts "Git File History")
 map("n", "<leader>gt", ":DiffviewToggleFile<CR>", opts "Git Diff Toggle File")
 map("n", "<leader>go", ":DiffviewOpen<CR>", opts "Git Diff Open")
 map("n", "<leader>gc", ":DiffviewClose<CR>", opts "Git Diff Close")
+map("n", "<leader>gb", ":Gitsigns blame<CR>", opts "Git Blame")
+map("n", "<leader>gh", ":Gitsigns preview_hunk<CR>", opts "Git Preview Hunk")
+map("n", "<leader>gbt", ":Gitsigns toggle_current_line_blame<CR>", opts "Git Toggle Current Line Blame")
 
 -- Debug
 map("n", "<leader>du", function()
@@ -156,3 +163,10 @@ end, opts "Toogle Terminal Horizontal")
 map("t", "<C-f>", function()
   require("nvchad.term").toggle { pos = "float" }
 end, opts "Toogle Terminal Float")
+
+-- LLM
+map({ "n", "v" }, "<leader>ll", ":Gen<CR>", opts "LLM")
+map({ "n", "v" }, "<leader>lc", ":Gen Chat<CR>", opts "LLM Chat Prompt")
+map({ "n", "v" }, "<leader>lm", function()
+  require("gen").select_model()
+end, opts "LLM Change Model")

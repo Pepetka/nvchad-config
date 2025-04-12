@@ -7,6 +7,7 @@ local prettier = { prettier = tools.has_prettier() }
 local prettier_stylelint = { stylelint = tools.has_stylelint(), prettier = tools.has_prettier() }
 local prettier_eslint = { eslint_d = tools.has_eslint(), prettier = tools.has_prettier() }
 
+---@type conform.setupOpts
 local options = {
   formatters_by_ft = {
     lua = list_by_condition(stylua),
