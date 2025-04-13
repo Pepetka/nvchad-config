@@ -128,23 +128,23 @@ local function multi_operations(bufnr)
     end)
   end
 
-  map("n", "<Esc>", api.marks.clear, opts("Clear Marks", bufnr))
+  map("n", "<Esc>", api.marks.clear, opts("Tree: Clear Marks", bufnr))
 
-  map("n", "p", api.fs.paste, opts("Paste", bufnr))
-  map("n", "J", mark_move_j, opts("Toggle Bookmark Down", bufnr))
-  map("n", "K", mark_move_k, opts("Toggle Bookmark Up", bufnr))
+  map("n", "p", api.fs.paste, opts("Tree: Paste", bufnr))
+  map("n", "J", mark_move_j, opts("Tree: Toggle Bookmark Down", bufnr))
+  map("n", "K", mark_move_k, opts("Tree: Toggle Bookmark Up", bufnr))
 
-  map("n", "x", mark_cut, opts("Cut File(s)", bufnr))
-  map("n", "tr", mark_trash, opts("Trash File(s)", bufnr))
-  map("n", "d", mark_remove, opts("Remove File(s)", bufnr))
-  map("n", "c", mark_copy, opts("Copy File(s)", bufnr))
+  map("n", "x", mark_cut, opts("Tree: Cut File(s)", bufnr))
+  map("n", "tr", mark_trash, opts("Tree: Trash File(s)", bufnr))
+  map("n", "d", mark_remove, opts("Tree: Remove File(s)", bufnr))
+  map("n", "c", mark_copy, opts("Tree: Copy File(s)", bufnr))
 
   map("n", "mv", function()
     mark_move(false)
-  end, opts("Move To File(s)", bufnr))
+  end, opts("Tree: Move To File(s)", bufnr))
   map("n", "cp", function()
     mark_move(true)
-  end, opts("Copy To File(s)", bufnr))
+  end, opts("Tree: Copy To File(s)", bufnr))
 end
 
 -- Vim-like navigation
@@ -167,10 +167,10 @@ local function vim_like_navigation(bufnr)
     api.tree.focus()
   end
 
-  map("n", "l", edit_or_open, opts("Open File or Folder", bufnr))
-  map("n", "L", open_buffer_silent, opts("Open File Silently", bufnr))
-  map("n", "h", api.node.navigate.parent_close, opts("Close Directory", bufnr))
-  map("n", "H", api.tree.collapse_all, opts("Collapse", bufnr))
+  map("n", "l", edit_or_open, opts("Tree: Open File or Folder", bufnr))
+  map("n", "L", open_buffer_silent, opts("Tree: Open File Silently", bufnr))
+  map("n", "h", api.node.navigate.parent_close, opts("Tree: Close Directory", bufnr))
+  map("n", "H", api.tree.collapse_all, opts("Tree: Collapse", bufnr))
 end
 
 local function on_attach(bufnr)

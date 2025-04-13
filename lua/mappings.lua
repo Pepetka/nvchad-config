@@ -14,11 +14,27 @@ local function opts(desc, params)
 end
 
 -- Basic
-map("n", ";", ":", opts("CMD enter command mode", { silent = false }))
+map("n", ";", ":", opts("Basic: CMD enter command mode", { silent = false }))
 
-map("i", "jk", "<ESC>", opts "Escape")
-map("i", "jj", "<ESC>", opts "Escape")
+map("i", "jk", "<ESC>", opts "Basic: Escape")
+map("i", "jj", "<ESC>", opts "Basic: Escape")
 
+map("i", "<C-Space>", function()
+  require("cmp").complete()
+end, opts "Basic: Call Autocomplete")
+
+map("n", "<leader>fm", function()
+  require("conform").format { lsp_fallback = true, timeout_ms = 10000 }
+  require("lint").try_lint()
+end, opts "Basic: Format Code")
+
+map("v", "D", ":m '>+1<CR>gv=gv", opts "Basic: Swap line down")
+map("v", "U", ":m '>-1<cr>gv=gv", opts "Basic: swap line up")
+
+map("v", "H", "<gv", opts "Basic: Indent left")
+map("v", "L", ">gv", opts "Basic: Indent right")
+
+-- Codeium
 map("i", "<C-g>", function()
   return vim.fn["codeium#Accept"]()
 end, opts("Codeium: Accept Codeium", { expr = true }))
@@ -32,26 +48,11 @@ map("i", "<c-x>", function()
   return vim.fn["codeium#Clear"]()
 end, opts("Codeium: Clear", { expr = true }))
 
-map("i", "<C-Space>", function()
-  require("cmp").complete()
-end, opts "Call Autocomplete")
-
-map("n", "<leader>fm", function()
-  require("conform").format { lsp_fallback = true, timeout_ms = 1000 }
-  require("lint").try_lint()
-end, opts "Format Code")
-
-map("v", "D", ":m '>+1<CR>gv=gv", opts "Swap line down")
-map("v", "U", ":m '>-1<cr>gv=gv", opts "swap line up")
-
-map("v", "H", "<gv", opts "Indent left")
-map("v", "L", ">gv", opts "Indent right")
-
 -- Buffer
-map("n", "<leader>w", "<cmd>wa<CR>", opts "Save All")
+map("n", "<leader>w", "<cmd>wa<CR>", opts "Buffer: Save All")
 map("n", "<leader>cx", function()
   require("nvchad.tabufline").closeAllBufs(false)
-end, opts "Close all buffers")
+end, opts "Buffer: Close all buffers")
 
 local buffer_mode_active = false
 local function toggle_buffer_mode()
@@ -86,87 +87,86 @@ local function toggle_buffer_mode()
   end
 end
 
-map("n", "<leader>bm", toggle_buffer_mode, opts "Toggle Buffer Mode")
+map("n", "<leader>bm", toggle_buffer_mode, opts "Buffer: Toggle Buffer Mode")
 
 -- Tmux
-map("n", "<c-l>", "<cmd>:TmuxNavigateRight<cr>", opts "Tmux Right")
-map("n", "<c-h>", "<cmd>:TmuxNavigateLeft<cr>", opts "Tmux Left")
-map("n", "<c-k>", "<cmd>:TmuxNavigateUp<cr>", opts "Tmux Up")
-map("n", "<c-j>", "<cmd>:TmuxNavigateDown<cr>", opts "Tmux Down")
+map("n", "<c-l>", "<cmd>:TmuxNavigateRight<cr>", opts "Tmux: Tmux Right")
+map("n", "<c-h>", "<cmd>:TmuxNavigateLeft<cr>", opts "Tmux: Tmux Left")
+map("n", "<c-k>", "<cmd>:TmuxNavigateUp<cr>", opts "Tmux: Tmux Up")
+map("n", "<c-j>", "<cmd>:TmuxNavigateDown<cr>", opts "Tmux: Tmux Down")
 
 -- Translate
-map("v", "<leader>te", ":Translate EN<CR>", opts "Translate (en)")
-map("v", "<leader>tr", ":Translate RU<CR>", opts "Translate (ru)")
-map("v", "<leader>to", ":Translate EN --output=replace<CR>", opts "Translate (en) and replace")
+map("v", "<leader>te", ":Translate EN<CR>", opts "Translate: Translate (en)")
+map("v", "<leader>tr", ":Translate RU<CR>", opts "Translate: Translate (ru)")
+map("v", "<leader>toe", ":Translate EN --output=replace<CR>", opts "Translate: Translate (en) and replace")
+map("v", "<leader>tor", ":Translate Ru --output=replace<CR>", opts "Translate: Translate (ru) and replace")
 
 -- Tests
 map("n", "<leader>tt", function()
   neotest.run.run()
-end, opts "Run nearest test")
+end, opts "Test: Run nearest test")
 map("n", "<leader>tf", function()
   neotest.run.run(vim.fn.expand "%")
-end, opts "Run test file")
-map("n", "<leader>to", ":Neotest output<CR>", opts "Show test output")
-map("n", "<leader>ts", ":Neotest summary<CR>", opts "Show test summary")
+end, opts "Test: Run test file")
+map("n", "<leader>to", ":Neotest output<CR>", opts "Test: Show test output")
+map("n", "<leader>ts", ":Neotest summary<CR>", opts "Test: Show test summary")
 
 -- Trouble
-map("n", "<leader>qw", "<cmd>Trouble diagnostics toggle<cr>", opts "Open Workspace Trouble")
-map("n", "<leader>qd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", opts "Open Document Trouble")
-map("n", "<leader>qq", "<cmd>Trouble qflist toggle<cr>", opts "Open Quickfix")
-map("n", "<leader>qt", "<cmd>TodoQuickFix<CR>", opts "Open Todo Trouble")
+map("n", "<leader>qw", "<cmd>Trouble diagnostics toggle<cr>", opts "Trouble: Open Workspace Trouble")
+map("n", "<leader>qd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", opts "Trouble: Open Document Trouble")
+map("n", "<leader>qq", "<cmd>Trouble qflist toggle<cr>", opts "Trouble: Open Quickfix")
+map("n", "<leader>qt", "<cmd>TodoQuickFix<CR>", opts "Trouble: Open Todo Trouble")
 
-map("n", "<leader>ft", "<cmd>TodoTelescope<CR>", opts "Telescope Todo")
+-- Todo
+map("n", "<leader>ft", "<cmd>TodoTelescope<CR>", opts "Todo: Telescope Todo")
 
 -- Git
-map("n", "<leader>gl", ":Flog<CR>", opts "Git Log")
-map("n", "<leader>gf", ":DiffviewFileHistory<CR>", opts "Git File History")
-map("n", "<leader>gt", ":DiffviewToggleFile<CR>", opts "Git Diff Toggle File")
-map("n", "<leader>go", ":DiffviewOpen<CR>", opts "Git Diff Open")
-map("n", "<leader>gc", ":DiffviewClose<CR>", opts "Git Diff Close")
-map("n", "<leader>gb", ":Gitsigns blame<CR>", opts "Git Blame")
-map("n", "<leader>gh", ":Gitsigns preview_hunk<CR>", opts "Git Preview Hunk")
-map("n", "<leader>gbt", ":Gitsigns toggle_current_line_blame<CR>", opts "Git Toggle Current Line Blame")
+map("n", "<leader>gl", ":Flog<CR>", opts "Git: Git Log")
+map("n", "<leader>gf", ":DiffviewFileHistory<CR>", opts "Git: Git File History")
+map("n", "<leader>gt", ":DiffviewToggleFile<CR>", opts "Git: Git Diff Toggle File")
+map("n", "<leader>go", ":DiffviewOpen<CR>", opts "Git: Git Diff Open")
+map("n", "<leader>gc", ":DiffviewClose<CR>", opts "Git: Git Diff Close")
+map("n", "<leader>gb", ":Gitsigns blame<CR>", opts "Git: Git Blame")
+map("n", "<leader>gh", ":Gitsigns preview_hunk<CR>", opts "Git: Git Preview Hunk")
+map("n", "<leader>gbt", ":Gitsigns toggle_current_line_blame<CR>", opts "Git: Git Toggle Current Line Blame")
 
 -- Debug
 map("n", "<leader>du", function()
   require("dapui").toggle()
-end, opts "Toggle Debug UI")
+end, opts "Debug: Toggle Debug UI")
 map("n", "<leader>db", function()
   require("dap").toggle_breakpoint()
-end, opts "Toggle Breakpoint")
+end, opts "Debug: Toggle Breakpoint")
 map("n", "<leader>ds", function()
   require("dap").continue()
-end, opts "Debug Start")
+end, opts "Debug: Debug Start")
 map("n", "<leader>dO", function()
   require("dap").step_out()
-end, opts "Debug Step Out")
+end, opts "Debug: Debug Step Out")
 map("n", "<leader>do", function()
   require("dap").step_over()
-end, opts "Debug Step Over")
+end, opts "Debug: Debug Step Over")
 
 -- Terminal
 map("n", "<C-]>", function()
   require("nvchad.term").toggle { pos = "vsp", size = 0.4 }
-end, opts "Toogle Terminal Vertical")
+end, opts "Terminal: Toogle Terminal Vertical")
 map("n", "<C-\\>", function()
   require("nvchad.term").toggle { pos = "sp", size = 0.4 }
-end, opts "Toogle Terminal Horizontal")
+end, opts "Terminal: Toogle Terminal Horizontal")
 map("n", "<C-f>", function()
   require("nvchad.term").toggle { pos = "float" }
-end, opts "Toogle Terminal Float")
+end, opts "Terminal: Toogle Terminal Float")
 map("t", "<C-]>", function()
   require("nvchad.term").toggle { pos = "vsp" }
-end, opts "Toogle Terminal Vertical")
+end, opts "Terminal: Toogle Terminal Vertical")
 map("t", "<C-\\>", function()
   require("nvchad.term").toggle { pos = "sp" }
-end, opts "Toogle Terminal Horizontal")
+end, opts "Terminal: Toogle Terminal Horizontal")
 map("t", "<C-f>", function()
   require("nvchad.term").toggle { pos = "float" }
-end, opts "Toogle Terminal Float")
+end, opts "Terminal: Toogle Terminal Float")
 
 -- LLM
-map({ "n", "v" }, "<leader>ll", ":Gen<CR>", opts "LLM")
-map({ "n", "v" }, "<leader>lc", ":Gen Chat<CR>", opts "LLM Chat Prompt")
-map({ "n", "v" }, "<leader>lm", function()
-  require("gen").select_model()
-end, opts "LLM Change Model")
+map({ "n", "v" }, "<leader>ll", ":Gen<CR>", opts "LLM: Prompts List")
+map({ "n", "v" }, "<leader>lc", ":ChatGPT<CR>", opts "LLM: Open Chat")

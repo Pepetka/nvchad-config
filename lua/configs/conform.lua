@@ -3,9 +3,9 @@ local tools = require "utils.has_tools"
 local list_by_condition = require "utils.list_by_condition"
 
 local stylua = { stylua = true }
-local prettier = { prettier = tools.has_prettier() }
-local prettier_stylelint = { stylelint = tools.has_stylelint(), prettier = tools.has_prettier() }
-local prettier_eslint = { eslint_d = tools.has_eslint(), prettier = tools.has_prettier() }
+local prettier = { prettier = true }
+local prettier_stylelint = { stylelint = tools.has_stylelint(), prettier = true }
+local prettier_eslint = { eslint_d = tools.has_eslint(), prettier = true }
 
 ---@type conform.setupOpts
 local options = {
@@ -21,7 +21,7 @@ local options = {
   },
 
   format_on_save = {
-    timeout_ms = 1000,
+    timeout_ms = 10000,
     lsp_fallback = true,
   },
 }
