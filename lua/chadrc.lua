@@ -34,6 +34,7 @@ M.ui = {
     modules = {},
   },
   tabufline = {
+    lazyload = false,
     order = { "buffers", "tabs", "treeOffset" },
   },
   cmp = {
@@ -53,10 +54,13 @@ M.mason = {
     "stylua",
     "css-lsp",
     "html-lsp",
+    "json-lsp",
     "eslint_d",
     "prettier",
     "stylelint",
     "lua-language-server",
+    "svelte-language-server",
+    "prisma-language-server",
     "cssmodules-language-server",
     "tailwindcss-language-server",
     "css-variables-language-server",
@@ -70,6 +74,23 @@ M.colorify = {
 
 M.nvdash = {
   load_on_startup = true,
+  -- header = {
+  --   " ▄████▄        ▒█████        ██▀███       ▓█████ ",
+  --   "▒██▀ ▀█       ▒██▒  ██▒     ▓██ ▒ ██▒     ▓█   ▀ ",
+  --   "▒▓█    ▄      ▒██░  ██▒     ▓██ ░▄█ ▒     ▒███   ",
+  --   "▒▓▓▄ ▄██▒     ▒██   ██░     ▒██▀▀█▄       ▒▓█  ▄ ",
+  --   "▒ ▓███▀ ░ ██▓ ░ ████▓▒░ ██▓ ░██▓ ▒██▒ ██▓ ░▒████▒",
+  --   "░ ░▒ ▒  ░ ▒▓▒ ░ ▒░▒░▒░  ▒▓▒ ░ ▒▓ ░▒▓░ ▒▓▒ ░░ ▒░ ░",
+  --   "  ░  ▒    ░▒    ░ ▒ ▒░  ░▒    ░▒ ░ ▒░ ░▒   ░ ░  ░",
+  --   "░         ░   ░ ░ ░ ▒   ░     ░░   ░  ░      ░   ",
+  --   "░ ░        ░      ░ ░    ░     ░       ░     ░  ░",
+  --   "░          ░             ░             ░         ",
+  --   "                                                 ",
+  --   "╭┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈╮",
+  --   "         Code. Organize. Refine. Execute         ",
+  --   "╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈╯",
+  --   "                                                 ",
+  -- },
   header = {
     " ██████╗    ██████╗    ██████╗    ███████╗",
     "██╔════╝   ██╔═══██╗   ██╔══██╗   ██╔════╝",

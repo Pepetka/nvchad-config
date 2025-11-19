@@ -1,4 +1,5 @@
 return {
+  { import = "nvchad.blink.lazyspec" },
   {
     "nvim-tree/nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeOpen", "NvimTreeFocus" },
@@ -23,7 +24,7 @@ return {
     ft = { "typescript", "javascript", "typescriptreact", "javascriptreact" },
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     opts = require "configs.typescript",
-    build = "npm install -g @styled/typescript-styled-plugin typescript-styled-plugin",
+    build = "npm install -g @styled/typescript-styled-plugin typescript-styled-plugin typescript-svelte-plugin",
   },
   {
     "mfussenegger/nvim-lint",
@@ -84,9 +85,7 @@ return {
   {
     "ggandor/leap.nvim",
     event = "VeryLazy",
-    config = function()
-      require("leap").add_default_mappings(true)
-    end,
+    config = true,
   },
   {
     "uga-rosa/translate.nvim",
@@ -158,8 +157,13 @@ return {
     opts = {},
   },
   {
-    "Exafunction/codeium.vim",
+    "monkoose/neocodeium",
     event = "InsertEnter",
+    config = function()
+      require("neocodeium").setup {
+        silent = true,
+      }
+    end,
   },
   {
     "mfussenegger/nvim-dap",
@@ -202,6 +206,15 @@ return {
     opts = {},
   },
   {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    build = "cd app && yarn install",
+    init = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+    end,
+    ft = { "markdown" },
+  },
+  {
     "David-Kunz/gen.nvim",
     cmd = "Gen",
     opts = require "configs.gen",
@@ -218,5 +231,54 @@ return {
       "nvim-telescope/telescope.nvim",
       "MeanderingProgrammer/render-markdown.nvim",
     },
+  },
+  {
+    "kndndrj/nvim-dbee",
+    cmd = "Dbee",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+    },
+    build = function()
+      require("dbee").install()
+    end,
+    config = function()
+      require("dbee").setup {}
+    end,
+  },
+  {
+    "vuki656/package-info.nvim",
+    ft = { "json", "jsonc" },
+    dependencies = { "MunifTanjim/nui.nvim" },
+    config = function()
+      require "configs.packageinfo"
+    end,
+  },
+  {
+    "yardnsm/vim-import-cost",
+    ft = { "typescript", "javascript", "typescriptreact", "javascriptreact" },
+    config = function()
+      require "configs.importcost"
+    end,
+    build = "npm install --production",
+  },
+  {
+    "kylechui/nvim-surround",
+    event = "VeryLazy",
+    opts = {},
+  },
+  {
+    "NeogitOrg/neogit",
+    cmd = "Neogit",
+    opts = {},
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+  },
+  {
+    "b0o/schemastore.nvim",
+    ft = { "json", "jsonc" },
+    dependencies = { "neovim/nvim-lspconfig" },
   },
 }

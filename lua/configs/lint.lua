@@ -12,7 +12,7 @@ require("lint").linters_by_ft = {
   javascriptreact = list_by_condition(eslint),
 }
 
-vim.api.nvim_create_autocmd({ "BufRead", "InsertLeave", "BufWritePost" }, {
+vim.api.nvim_create_autocmd({ "BufRead", "InsertLeave", "TextChanged", "BufWritePost" }, {
   callback = function()
     require("lint").try_lint()
   end,

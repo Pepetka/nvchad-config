@@ -1,19 +1,22 @@
-require("nvchad.configs.lspconfig").defaults()
+local nvlsp = require "nvchad.configs.lspconfig"
+nvlsp.defaults()
 
-local lspconfig = require "lspconfig"
+local lspconfig = vim.lsp
 
 local servers = {
   "html",
   "cssls",
+  "svelte",
   "lua_ls",
+  "jsonls",
+  "prismals",
   "tailwindcss",
   "cssmodules_ls",
   "css_variables",
 }
-local nvlsp = require "nvchad.configs.lspconfig"
 
 for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
+  lspconfig.config(lsp, {
     on_attach = nvlsp.on_attach,
     on_init = nvlsp.on_init,
     capabilities = nvlsp.capabilities,
@@ -49,6 +52,11 @@ for _, lsp in ipairs(servers) do
           },
         },
       },
+      json = {
+        schemas = require("schemastore").json.schemas(),
+        validate = { enable = true },
+      },
     },
-  }
+  })
+  lspconfig.enable(lsp)
 end

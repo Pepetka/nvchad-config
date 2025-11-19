@@ -15,6 +15,8 @@ local options = {
     "markdown_inline",
     "http",
     "hurl",
+    "prisma",
+    "svelte",
   },
   sync_install = false,
 }
