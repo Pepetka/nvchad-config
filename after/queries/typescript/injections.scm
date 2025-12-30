@@ -33,7 +33,10 @@
     (instantiation_expression
       (call_expression
         function: (identifier) @_name
-        arguments: (arguments(identifier)) @_prop
+        arguments: (arguments[
+          (identifier)
+          (member_expression)
+        ]) @_prop
         (#eq? @_name "styled"))
       type_arguments: (type_arguments)?))
   arguments: (template_string) @injection.content
@@ -46,7 +49,10 @@
   left: (binary_expression
     left: (call_expression
       function: (identifier) @_name
-      arguments: (arguments(identifier)) @_prop
+      arguments: (arguments[
+        (identifier)
+        (member_expression)
+      ]) @_prop
       (#eq? @_name "styled"))
     right: (identifier))
   right: (template_string) @injection.content

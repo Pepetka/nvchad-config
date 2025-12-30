@@ -1,6 +1,4 @@
--- This file needs to have same structure as nvconfig.lua
--- https://github.com/NvChad/ui/blob/v3.0/lua/nvconfig.lua
--- Please read that file to know all available options :(
+local get_header = require "utils.nvdash_header"
 
 ---@type ChadrcConfig
 local M = {}
@@ -30,8 +28,11 @@ M.base46 = {
 
 M.ui = {
   statusline = {
+    enabled = true,
     theme = "minimal",
+    separator_style = "round",
     modules = {},
+    order = {},
   },
   tabufline = {
     lazyload = false,
@@ -74,36 +75,7 @@ M.colorify = {
 
 M.nvdash = {
   load_on_startup = true,
-  -- header = {
-  --   " ▄████▄        ▒█████        ██▀███       ▓█████ ",
-  --   "▒██▀ ▀█       ▒██▒  ██▒     ▓██ ▒ ██▒     ▓█   ▀ ",
-  --   "▒▓█    ▄      ▒██░  ██▒     ▓██ ░▄█ ▒     ▒███   ",
-  --   "▒▓▓▄ ▄██▒     ▒██   ██░     ▒██▀▀█▄       ▒▓█  ▄ ",
-  --   "▒ ▓███▀ ░ ██▓ ░ ████▓▒░ ██▓ ░██▓ ▒██▒ ██▓ ░▒████▒",
-  --   "░ ░▒ ▒  ░ ▒▓▒ ░ ▒░▒░▒░  ▒▓▒ ░ ▒▓ ░▒▓░ ▒▓▒ ░░ ▒░ ░",
-  --   "  ░  ▒    ░▒    ░ ▒ ▒░  ░▒    ░▒ ░ ▒░ ░▒   ░ ░  ░",
-  --   "░         ░   ░ ░ ░ ▒   ░     ░░   ░  ░      ░   ",
-  --   "░ ░        ░      ░ ░    ░     ░       ░     ░  ░",
-  --   "░          ░             ░             ░         ",
-  --   "                                                 ",
-  --   "╭┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈╮",
-  --   "         Code. Organize. Refine. Execute         ",
-  --   "╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈╯",
-  --   "                                                 ",
-  -- },
-  header = {
-    " ██████╗    ██████╗    ██████╗    ███████╗",
-    "██╔════╝   ██╔═══██╗   ██╔══██╗   ██╔════╝",
-    "██║        ██║   ██║   ██████╔╝   █████╗  ",
-    "██║        ██║   ██║   ██╔══██╗   ██╔══╝  ",
-    "╚██████╗██╗╚██████╔╝██╗██║  ██║██╗███████╗",
-    " ╚═════╝╚═╝ ╚═════╝ ╚═╝╚═╝  ╚═╝╚═╝╚══════╝",
-    "                                          ",
-    "╭┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈╮",
-    "     Code. Organize. Refine. Execute.     ",
-    "╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈╯",
-    "                                          ",
-  },
+  header = get_header(),
 }
 
 return M

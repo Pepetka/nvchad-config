@@ -281,4 +281,16 @@ return {
     ft = { "json", "jsonc" },
     dependencies = { "neovim/nvim-lspconfig" },
   },
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    event = "VeryLazy",
+    opts = require "configs.lualine",
+  },
+  {
+    "nvim-telescope/telescope.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "BurntSushi/ripgrep" },
+    event = "VeryLazy",
+    opts = require "configs.telescope",
+  },
 }
