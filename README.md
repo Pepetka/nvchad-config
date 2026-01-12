@@ -1,58 +1,64 @@
-# 🛠️ Neovim конфиг для веб-разработки
+# Neovim config for web development
 
-Моя персональная сборка Neovim, адаптированная под профессиональную веб-разработку. Базируется на [NvChad](https://github.com/NvChad/NvChad) и полностью размещается в директории `~/.config/nvim`.
+My personal Neovim setup for professional web development. Built on top of [NvChad](https://github.com/NvChad/NvChad) and lives entirely in `~/.config/nvim`.
 
-## 🚀 Основные особенности
+## Key features
 
-- **Поддержка TypeScript / JavaScript** — автодополнение, форматирование, линтинг, отладка, запуск тестов.
-- **Интеграция с LLM** — плагины [Codeium](https://codeium.com/) и OpenAI для генерации, чата и дополнения кода.
-- **Типизированные настройки плагинов** — строгая типизация опций в Lua-файлах (через `---@type`).
-- **Улучшенный UI** — продвинутые компоненты интерфейса: статус-бар, вкладки, всплывающие окна, индикаторы загрузки и т.д.
-- **Расширенный UX** — множество плагинов для повышения удобства разработки, включая улучшенную навигацию, Git-интеграцию, дополнителые функции nvim-tree и многое другое.
-- **Поддержка множества языков** — TypeScript, JavaScript, HTML, CSS, JSON, Markdown, Lua и многие другие.
-- **Поддержка css-modules, tailwindcss и css-in-js** - подсветка синтаксиса и автодополнение CSS, TailwindCSS в css, компонентах и CSS-in-JS.
+- **TypeScript/JavaScript support** - completion, formatting, linting, debugging, and test runs.
+- **AI assistance** - Codeium via `neocodeium`, plus OpenAI tools (`ChatGPT.nvim` and `gen.nvim`) for chat, generation, and edits.
+- **Typed plugin configs** - strict options typing in Lua with `---@type`.
+- **Upgraded UI** - statusline, tabs, popups, notifications, and progress indicators.
+- **Developer UX** - navigation helpers, Git integration, extra nvim-tree features, and more.
+- **Broad language coverage** - TypeScript, JavaScript, HTML, CSS, JSON, Markdown, Lua, and others.
+- **CSS modules, Tailwind, CSS-in-JS** - syntax highlighting and CSS completion inside stylesheets and components.
 
-## 📂 Структура
+## Screenshots
 
-Конфигурация полностью следует структуре NvChad:
+![Welcome screen](./images/welcome_screen.png)
+![File tree](./images/file_tree.png)
+![Buffers and UI](./images/buffer_screen.png)
+
+## Structure
+
+The config follows the NvChad layout:
 
 ```txt
 ~/.config/nvim
 ├── after/
 │   ├── queries/
-│   │   ├── typescript/  # Дополнительные language-injections для поддержки css-in-js с типизацией
+│   │   ├── typescript/  # Extra language injections for typed CSS-in-JS
 ├── lua/
-│   ├── configs/         # Конфигурации кастомных плагинов
-│   ├── plugins/         # Инициализация плагинов
-│   ├── types/           # Типизация плагинов
-│   ├── utils/           # Пользовательские функции
-│   ├── chadrc.lua       # Конфигурация NvChad
-│   ├── mappings.lua     # Пользовательские хоткеи
-│   └── options.lua      # Общие настройки
-├── init.lua             # Точка входа
+│   ├── configs/         # Custom plugin configs
+│   ├── plugins/         # Plugin initialization
+│   ├── types/           # Plugin option typings
+│   ├── utils/           # Utility helpers
+│   ├── chadrc.lua       # NvChad config
+│   ├── mappings.lua     # Key mappings
+│   └── options.lua      # General options
+├── init.lua             # Entry point
 └── …
 ```
 
 
-## 🛠️ Установка
+## Installation
 
 ```bash
-# Замените текущий конфиг Neovim:
+# Replace your current Neovim config:
 mv ~/.config/nvim ~/.config/nvim.backup
 git clone https://github.com/Pepetka/nvchad-config ~/.config/nvim
 nvim
 ```
-- Выполнить `:MasonInstallAll` после того, как lazy.nvim закончит установку плагинов.
-- Удалить папку `.git` из nvim папки.
+- Run `:MasonInstallAll` after lazy.nvim finishes installing plugins.
+- Remove `.git` from the `~/.config/nvim` folder if you want to detach from the repo.
 
-## 📦 Зависимости
+## Dependencies
 
-Для полной поддержки автодополнения в `css-in-js` (например, styled-components / Emotion) необходимо установить следующие пакеты глобально:
+For full `css-in-js` completion support (e.g., styled-components / Emotion), install the following packages globally:
 
 ```bash
 npm install -g @styled/typescript-styled-plugin typescript-styled-plugin
 ```
 
-## 📜 Лицензия
+## License
 
-Этот проект распространяется на условиях **Unlicense** — вы можете использовать, копировать, изменять и распространять этот код без ограничений. Подробнее см. в файле [LICENSE](./LICENSE) или на [unlicense.org](https://unlicense.org).
+This project is released under **Unlicense**. You can use, copy, modify, and distribute this code without restrictions. See [LICENSE](./LICENSE) or [unlicense.org](https://unlicense.org).
