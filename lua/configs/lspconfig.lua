@@ -6,6 +6,7 @@ local lspconfig = vim.lsp
 local servers = {
   "html",
   "cssls",
+  "gopls",
   "svelte",
   "lua_ls",
   "jsonls",

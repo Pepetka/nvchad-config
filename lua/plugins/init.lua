@@ -68,22 +68,7 @@ return {
     opts = {},
   },
   {
-    "nvim-neotest/neotest",
-    event = "BufReadPost",
-    config = function()
-      require "configs.test"
-    end,
-    dependencies = {
-      "nvim-neotest/nvim-nio",
-      "nvim-lua/plenary.nvim",
-      "antoinemadec/FixCursorHold.nvim",
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-neotest/neotest-jest",
-      "thenbe/neotest-playwright",
-    },
-  },
-  {
-    "ggandor/leap.nvim",
+    url = "https://codeberg.org/andyg/leap.nvim",
     event = "VeryLazy",
     config = true,
   },
@@ -189,20 +174,11 @@ return {
     end,
   },
   {
-    "jellydn/hurl.nvim",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-      "MeanderingProgrammer/render-markdown.nvim",
-    },
-    ft = "hurl",
-    opts = {},
-  },
-  {
     "MeanderingProgrammer/render-markdown.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
     ft = { "markdown" },
+    ---@module 'render-markdown'
+    ---@type render.md.UserConfig
     opts = {},
   },
   {
@@ -213,37 +189,6 @@ return {
       vim.g.mkdp_filetypes = { "markdown" }
     end,
     ft = { "markdown" },
-  },
-  {
-    "David-Kunz/gen.nvim",
-    cmd = "Gen",
-    opts = require "configs.gen",
-    dependencies = { "MeanderingProgrammer/render-markdown.nvim" },
-  },
-  {
-    "jackMort/ChatGPT.nvim",
-    event = "VeryLazy",
-    opts = require "configs.chatgpt",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "folke/trouble.nvim",
-      "nvim-telescope/telescope.nvim",
-      "MeanderingProgrammer/render-markdown.nvim",
-    },
-  },
-  {
-    "kndndrj/nvim-dbee",
-    cmd = "Dbee",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-    },
-    build = function()
-      require("dbee").install()
-    end,
-    config = function()
-      require("dbee").setup {}
-    end,
   },
   {
     "vuki656/package-info.nvim",
@@ -265,16 +210,6 @@ return {
     "kylechui/nvim-surround",
     event = "VeryLazy",
     opts = {},
-  },
-  {
-    "NeogitOrg/neogit",
-    cmd = "Neogit",
-    opts = {},
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "sindrets/diffview.nvim",
-      "nvim-telescope/telescope.nvim",
-    },
   },
   {
     "b0o/schemastore.nvim",

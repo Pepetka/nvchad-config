@@ -1,7 +1,5 @@
 require "nvchad.mappings"
 
-local neotest = require "neotest"
-
 local map = vim.keymap.set
 local del = vim.keymap.del
 
@@ -107,16 +105,6 @@ map("v", "<leader>tr", ":Translate RU<CR>", opts "Translate: Translate (ru)")
 map("v", "<leader>toe", ":Translate EN --output=replace<CR>", opts "Translate: Translate (en) and replace")
 map("v", "<leader>tor", ":Translate Ru --output=replace<CR>", opts "Translate: Translate (ru) and replace")
 
--- Tests
-map("n", "<leader>tt", function()
-  neotest.run.run()
-end, opts "Test: Run nearest test")
-map("n", "<leader>tf", function()
-  neotest.run.run(vim.fn.expand "%")
-end, opts "Test: Run test file")
-map("n", "<leader>to", ":Neotest output<CR>", opts "Test: Show test output")
-map("n", "<leader>ts", ":Neotest summary<CR>", opts "Test: Show test summary")
-
 -- Trouble
 map("n", "<leader>qw", "<cmd>Trouble diagnostics toggle<cr>", opts "Trouble: Open Workspace Trouble")
 map("n", "<leader>qd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", opts "Trouble: Open Document Trouble")
@@ -172,10 +160,6 @@ end, opts "Terminal: Toogle Terminal Horizontal")
 map("t", "<C-f>", function()
   require("nvchad.term").toggle { pos = "float" }
 end, opts "Terminal: Toogle Terminal Float")
-
--- LLM
-map({ "n", "v" }, "<leader>ll", ":Gen<CR>", opts "LLM: Prompts List")
-map({ "n", "v" }, "<leader>lc", ":ChatGPT<CR>", opts "LLM: Open Chat")
 
 -- Markdown
 map("n", "<leader>md", ":MarkdownPreviewToggle<CR>", opts "Markdown: Markdown Preview")

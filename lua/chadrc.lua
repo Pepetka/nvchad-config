@@ -52,6 +52,7 @@ M.cheatsheet = {
 
 M.mason = {
   pkgs = {
+    "gopls",
     "stylua",
     "css-lsp",
     "html-lsp",
