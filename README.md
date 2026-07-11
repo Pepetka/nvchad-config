@@ -1,5 +1,9 @@
 # Neovim config for web development
 
+> [!WARNING]
+> This configuration is **no longer maintained**. I have migrated to a new setup based on `vim.pack` and native LSP.
+> Please use [Pepetka/nvim-config](https://github.com/Pepetka/nvim-config) instead.
+
 My personal Neovim setup for professional web development. Built on top of [NvChad](https://github.com/NvChad/NvChad) and lives entirely in `~/.config/nvim`.
 
 ## Key features
